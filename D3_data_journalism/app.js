@@ -19,7 +19,7 @@ function resizeResponse(){
     var margin = {
         top: 50,
         bottom: 50,
-        right: 50,
+        right: 200,
         left: 50
     };
 
@@ -37,7 +37,11 @@ function resizeResponse(){
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
     
     // Read CSV
-    d3.csv(src = "..data/data.csv").then(function(censusData){
+    d3.csv(src = "data.csv").then(function(censusData){
+        console.log("data loaded")
+
+        // create percentage parser
+        // var percentParser = d3.format()
 
         // parse data
         censusData.forEach(function(data){
@@ -47,7 +51,7 @@ function resizeResponse(){
 
         // create scales for axes
         var xLinearScale = d3.scaleLinear()
-            .domain([0, d3.max(censusData, d => d.poverty)])
+            .domain([d3.min(censusData, d => d.poverty)-1, d3.max(censusData, d => d.poverty)+2])
             .range([0, chartWidth]);
 
         var yLinearScale = d3.scaleLinear()
@@ -56,15 +60,25 @@ function resizeResponse(){
 
         // create axes
         var xAxis = d3.axisBottom(xLinearScale).ticks(8)
-        var yAs = d3.axisLeft(yLinearScale).ticks(13);
+        var yAxis = d3.axisLeft(yLinearScale).ticks(13);
 
         // append axes
         chartGroup.append("g")
-            .attr("transform", `translate(0, ${height})`)
+            .attr("transform", `translate(0, ${chartHeight})`)
             .call(xAxis);
 
         chartGroup.append("g")
             .call(yAxis);
+
+        // Create Axes labels
+        chartGroup.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left )
+            .attr("x", 0 - (chartHeight / 2))
+            .attr("dy", "1em")
+            .attr("stroke", "black")
+            .attr("class", "axisHealthcare")
+            .text("Lacks Healthcare (%)");
 
         // append circles
         var circleGroup = chartGroup.selectAll("circle")
@@ -74,7 +88,8 @@ function resizeResponse(){
             .attr("cx", d => xLinearScale(d.poverty))
             .attr("cy", d => yLinearScale(d.healthcare))
             .attr("r", "10")
-            .attr("fill", "lightblue");
+            .attr("class", "stateCircle");
+    
 
     })
 
