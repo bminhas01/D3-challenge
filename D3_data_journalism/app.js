@@ -83,41 +83,30 @@ function resizeResponse(){
             .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + margin.bottom - 60})`)
             .attr("class", "atext")
             .text("In Poverty (%)");
-
-        // append circles
-        var circleGroup = chartGroup.selectAll("circle")
+        
+        // Create a common g element to hold both the circle and the text within
+        var circleGroup = chartGroup.selectAll(null)
             .data(censusData)
             .enter()
-            .append("circle")
+            .append("g")
+
+        // Append circles
+        circleGroup.append("circle")
             .attr("cx", d => xLinearScale(d.poverty))
             .attr("cy", d => yLinearScale(d.healthcare))
             .attr("r", "10")
             .attr("class", "stateCircle")
+
+        // Append text to go within each circle
+        circleGroup.append("text")
             .text(function(d){
                 return d.abbr
             })
-            // .append ("text")
-            
-        // var circleGroup = chartGroup.selectAll(null)
-        //     .data(censusData)
-        //     .enter()
-        //     .append("g")
-
-        // circleGroup.append("circle")
-        //     .attr("cx", d => xLinearScale(d.poverty))
-        //     .attr("cy", d => yLinearScale(d.healthcare))
-        //     .attr("r", "10")
-        //     .attr("class", "stateCircle")
-
-        // circleGroup.append("text")
-        //     .text(function(d){
-        //         return d.abbr
-        //     })
-        //     .attr("cx", d => xLinearScale(d.poverty))
-        //     .attr("cy", d => yLinearScale(d.healthcare))
-        //     .attr("class", "stateText")
-
-       
+            .attr("x", d => xLinearScale(d.poverty))
+            .attr("y", d => yLinearScale(d.healthcare))
+            .attr("class", "stateText")
+            .attr("dy", +4)
+            .attr("font-size", 10) 
 
         // Initialize Tooltip
         var tooltip = d3.tip()
