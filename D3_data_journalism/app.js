@@ -94,6 +94,27 @@ function resizeResponse(){
             .attr("cy", d => yLinearScale(d.healthcare))
             .attr("r", "10")
             .attr("class", "stateCircle");
+
+        // Initialize Tooltip
+        var tooltip = d3.tip()
+            .attr("class", "d3-tip")
+            .html(function(d){
+                return (`${d.state}
+                Poverty: ${d.poverty}%
+                Healthcare: ${d.healthcare}%`)
+            });
+        
+        chartGroup.call(tooltip)
+
+        circleGroup.on("mouseover", function(d){
+            tooltip.show(d, this);
+        })
+
+        .on("mouseout", function(d){
+            tooltip.hide(d);
+        })
+
+
     
 
     })
