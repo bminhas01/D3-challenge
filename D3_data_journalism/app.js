@@ -18,7 +18,7 @@ function resizeResponse(){
     // set margins for the chart and calculate chart height and width
     var margin = {
         top: 50,
-        bottom: 50,
+        bottom: 100,
         right: 200,
         left: 50
     };
@@ -76,9 +76,14 @@ function resizeResponse(){
             .attr("y", 0 - margin.left )
             .attr("x", 0 - (chartHeight / 2))
             .attr("dy", "1em")
-            .attr("stroke", "black")
-            .attr("class", "axisHealthcare")
+            // .attr("stroke", "black")
+            .attr("class", "atext")
             .text("Lacks Healthcare (%)");
+
+        chartGroup.append("text")
+            .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + margin.bottom - 60})`)
+            .attr("class", "atext")
+            .text("In Poverty (%)");
 
         // append circles
         var circleGroup = chartGroup.selectAll("circle")
