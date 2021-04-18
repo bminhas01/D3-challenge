@@ -76,7 +76,6 @@ function resizeResponse(){
             .attr("y", 0 - margin.left )
             .attr("x", 0 - (chartHeight / 2))
             .attr("dy", "1em")
-            // .attr("stroke", "black")
             .attr("class", "atext")
             .text("Lacks Healthcare (%)");
 
@@ -93,7 +92,32 @@ function resizeResponse(){
             .attr("cx", d => xLinearScale(d.poverty))
             .attr("cy", d => yLinearScale(d.healthcare))
             .attr("r", "10")
-            .attr("class", "stateCircle");
+            .attr("class", "stateCircle")
+            .text(function(d){
+                return d.abbr
+            })
+            // .append ("text")
+            
+        // var circleGroup = chartGroup.selectAll(null)
+        //     .data(censusData)
+        //     .enter()
+        //     .append("g")
+
+        // circleGroup.append("circle")
+        //     .attr("cx", d => xLinearScale(d.poverty))
+        //     .attr("cy", d => yLinearScale(d.healthcare))
+        //     .attr("r", "10")
+        //     .attr("class", "stateCircle")
+
+        // circleGroup.append("text")
+        //     .text(function(d){
+        //         return d.abbr
+        //     })
+        //     .attr("cx", d => xLinearScale(d.poverty))
+        //     .attr("cy", d => yLinearScale(d.healthcare))
+        //     .attr("class", "stateText")
+
+       
 
         // Initialize Tooltip
         var tooltip = d3.tip()
