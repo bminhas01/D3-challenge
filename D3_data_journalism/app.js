@@ -44,6 +44,8 @@ function resizeResponse(){
         censusData.forEach(function(data){
             data.healthcare = +data.healthcare;
             data.poverty = +data.poverty;
+            data.poverty = +data.obesity;
+            data.poverty = +data.age;
         });
 
         // create scales for axes
@@ -73,7 +75,7 @@ function resizeResponse(){
             .attr("y", 0 - margin.left )
             .attr("x", 0 - (chartHeight / 2 - 20))
             .attr("dy", "1em")
-            .attr("class", "atext")
+            .attr("class", "atext obesity")
             .text("Obese (%)");
 
         chartGroup.append("text")
@@ -81,17 +83,17 @@ function resizeResponse(){
             .attr("y", 0 - margin.left +25 )
             .attr("x", 0 - (chartHeight / 2 + 10))
             .attr("dy", "1em")
-            .attr("class", "atext")
-            .text("Lacks Healthcare (%)");
+            .attr("class", "atext healthcare")
+            .text("Lacks Healthcare (%)")
 
         chartGroup.append("text")
             .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + margin.bottom - 60})`)
-            .attr("class", "atext")
+            .attr("class", "atext poverty")
             .text("In Poverty (%)");
 
         chartGroup.append("text")
             .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + margin.bottom - 35})`)
-            .attr("class", "atext")
+            .attr("class", "atext age")
             .text("Age (Median)");
         
         // Create a common g element to hold both the circle and the text within
