@@ -18,9 +18,9 @@ function resizeResponse(){
     // set margins for the chart and calculate chart height and width
     var margin = {
         top: 50,
-        bottom: 100,
+        bottom: 110,
         right: 200,
-        left: 50
+        left:70
     };
 
     var chartHeight = svgHeight - margin.top - margin.bottom;
@@ -39,9 +39,6 @@ function resizeResponse(){
     // Read CSV
     d3.csv(src = "data.csv").then(function(censusData){
         console.log("data loaded")
-
-        // create percentage parser
-        // var percentParser = d3.format()
 
         // parse data
         censusData.forEach(function(data){
@@ -74,7 +71,15 @@ function resizeResponse(){
         chartGroup.append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", 0 - margin.left )
-            .attr("x", 0 - (chartHeight / 2))
+            .attr("x", 0 - (chartHeight / 2 - 20))
+            .attr("dy", "1em")
+            .attr("class", "atext")
+            .text("Obese (%)");
+
+        chartGroup.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left +25 )
+            .attr("x", 0 - (chartHeight / 2 + 10))
             .attr("dy", "1em")
             .attr("class", "atext")
             .text("Lacks Healthcare (%)");
@@ -83,6 +88,11 @@ function resizeResponse(){
             .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + margin.bottom - 60})`)
             .attr("class", "atext")
             .text("In Poverty (%)");
+
+        chartGroup.append("text")
+            .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + margin.bottom - 35})`)
+            .attr("class", "atext")
+            .text("Age (Median)");
         
         // Create a common g element to hold both the circle and the text within
         var circleGroup = chartGroup.selectAll(null)
@@ -126,9 +136,6 @@ function resizeResponse(){
         .on("mouseout", function(d){
             tooltip.hide(d);
         })
-
-
-    
 
     })
 
