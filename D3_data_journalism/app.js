@@ -75,25 +75,25 @@ function resizeResponse(){
             .attr("y", 0 - margin.left )
             .attr("x", 0 - (chartHeight / 2 - 20))
             .attr("dy", "1em")
-            .attr("class", "atext obesity")
+            .attr("class", "atext active obesity yaxis")
             .text("Obese (%)");
 
         chartGroup.append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", 0 - margin.left +25 )
-            .attr("x", 0 - (chartHeight / 2 + 10))
+            .attr("x", 0 - (chartHeight / 2))
             .attr("dy", "1em")
-            .attr("class", "atext healthcare")
+            .attr("class", "atext inactive healthcare yaxis")
             .text("Lacks Healthcare (%)")
 
         chartGroup.append("text")
             .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + margin.bottom - 60})`)
-            .attr("class", "atext poverty")
+            .attr("class", "atext active poverty xaxis")
             .text("In Poverty (%)");
 
         chartGroup.append("text")
             .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + margin.bottom - 35})`)
-            .attr("class", "atext age")
+            .attr("class", "atext inactive age xaxis")
             .text("Age (Median)");
         
         // Create a common g element to hold both the circle and the text within
@@ -138,6 +138,28 @@ function resizeResponse(){
         .on("mouseout", function(d){
             tooltip.hide(d);
         })
+
+        var xaxisGroup = chartGroup.selectAll(".xaxis")
+        var yaxisGroup = chartGroup.selectAll(".yaxis")
+
+        xaxisGroup.on("mousedown", function(){
+            d3.selectAll("text")
+            .attr("class", "inactive")
+            d3.select(this)
+            .attr("class", "active")
+        })
+
+        yaxisGroup.on("mousedown", function(){
+            d3.selectAll("text")
+            .attr("class", "inactive")
+            d3.select(this)
+            .attr("class", "active")
+        })
+
+        // axislabelGroup.on("mouseout", function(){
+        //     d3.select(this)
+        //     .attr("class", "inactive")
+        // })
 
     })
 
