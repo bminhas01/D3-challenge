@@ -1,6 +1,5 @@
 // Wrap code inside a function that will automatically
 // resize the visuals based on the window size
-
 function resizeResponse(){
     // Check if SVG area is empty, if not, remove it and replace
     // with a resized version of the chart
