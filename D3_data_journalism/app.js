@@ -12,14 +12,14 @@ function resizeResponse(){
 
     // the SVG wrapper dimensions are determined by the current width
     // and height of the browser window
-    var svgWidth = window.innerWidth;
-    var svgHeight = window.innerHeight;
+    var svgWidth = window.innerWidth/1.8;
+    var svgHeight = window.innerHeight/1.9;
 
     // set margins for the chart and calculate chart height and width
     var margin = {
-        top: 50,
-        bottom: 110,
-        right: 200,
+        top: 20,
+        bottom: 100,
+        right: 50,
         left:70
     };
 
@@ -30,7 +30,8 @@ function resizeResponse(){
     var svg = d3.select("#scatter")
         .append("svg")
         .attr("height", svgHeight)
-        .attr("width", svgWidth);
+        .attr("width", svgWidth)
+        .attr("class", "iframeContainer")
 
     // Append group element and transform based on margin values
     var chartGroup = svg.append("g")
@@ -38,7 +39,6 @@ function resizeResponse(){
     
     // Read CSV
     d3.csv(src = "data.csv").then(function(censusData){
-        console.log("data loaded")
 
         // parse data
         censusData.forEach(function(data){
@@ -64,37 +64,25 @@ function resizeResponse(){
         // append axes
         chartGroup.append("g")
             .attr("transform", `translate(0, ${chartHeight})`)
-            .call(xAxis);
+            .call(xAxis)
 
         chartGroup.append("g")
-            .call(yAxis);
+            .call(yAxis);      
 
         // Create Axes labels
-        chartGroup.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 0 - margin.left )
-            .attr("x", 0 - (chartHeight / 2 - 20))
-            .attr("dy", "1em")
-            .attr("class", "atext active obesity yaxis")
-            .text("Obese (%)");
 
         chartGroup.append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", 0 - margin.left +25 )
+            .attr("y", 0 - margin.left + 10 )
             .attr("x", 0 - (chartHeight / 2))
             .attr("dy", "1em")
-            .attr("class", "atext inactive healthcare yaxis")
+            .attr("class", "active")
             .text("Lacks Healthcare (%)")
 
         chartGroup.append("text")
-            .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + margin.bottom - 60})`)
-            .attr("class", "atext active poverty xaxis")
+            .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + margin.bottom - 50})`)
+            .attr("class", "active")
             .text("In Poverty (%)");
-
-        chartGroup.append("text")
-            .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + margin.bottom - 35})`)
-            .attr("class", "atext inactive age xaxis")
-            .text("Age (Median)");
         
         // Create a common g element to hold both the circle and the text within
         var circleGroup = chartGroup.selectAll(null)
@@ -139,27 +127,6 @@ function resizeResponse(){
             tooltip.hide(d);
         })
 
-        var xaxisGroup = chartGroup.selectAll(".xaxis")
-        var yaxisGroup = chartGroup.selectAll(".yaxis")
-
-        xaxisGroup.on("mousedown", function(){
-            d3.selectAll("text")
-            .attr("class", "inactive")
-            d3.select(this)
-            .attr("class", "active")
-        })
-
-        yaxisGroup.on("mousedown", function(){
-            d3.selectAll("text")
-            .attr("class", "inactive")
-            d3.select(this)
-            .attr("class", "active")
-        })
-
-        // axislabelGroup.on("mouseout", function(){
-        //     d3.select(this)
-        //     .attr("class", "inactive")
-        // })
 
     })
 
