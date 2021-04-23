@@ -44,8 +44,6 @@ function resizeResponse(){
         censusData.forEach(function(data){
             data.healthcare = +data.healthcare;
             data.poverty = +data.poverty;
-            data.poverty = +data.obesity;
-            data.poverty = +data.age;
         });
 
         // create scales for axes
